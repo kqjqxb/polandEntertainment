@@ -360,7 +360,7 @@ const PlaceDetailsScreen = ({ setSelectedScreenPage, selectedScreenPage, selecte
                             coordinate={selectedPlace.coordinates}
                             title={selectedPlace.title}
                             description={selectedPlace.description}
-                            pinColor="#FDB905"
+                            pinColor="#DA553E"
                         />
 
                     </MapView>
