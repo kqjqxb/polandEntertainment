@@ -7,6 +7,7 @@ import {
     Dimensions,
     ScrollView,
     TextInput,
+    Alert,
 } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import commentsData from '../components/commentsData';
@@ -330,7 +331,7 @@ const PlaceDetailsScreen = ({ setSelectedScreenPage, selectedScreenPage, selecte
                                 paddingHorizontal: dimensions.width * 0.01,
                             }}
                         >
-                            {userComment ? '(4)' : '(3)'}
+                            (3)
                         </Text>
                         <Image
                             source={require('../assets/icons/starIcon.png')}
@@ -342,69 +343,6 @@ const PlaceDetailsScreen = ({ setSelectedScreenPage, selectedScreenPage, selecte
                             resizeMode="contain"
                         />
                     </View>
-
-                    {userComment && (
-                        <View key={comment.id} style={{
-                            width: '91%',
-                            backgroundColor: '#202020',
-                            borderRadius: dimensions.width * 0.1,
-                            padding: dimensions.width * 0.05,
-                            alignSelf: 'center',
-                            marginTop: dimensions.height * 0.02,
-                        }}>
-                            <View style={{
-                                flexDirection: 'row',
-                                alignItems: 'center',
-                                width: '100%',
-                            }}>
-                                <Image
-                                    source={require('../assets/images/dataImages/reviews/user.png')}
-                                    style={{
-                                        width: dimensions.width * 0.091,
-                                        height: dimensions.width * 0.091,
-                                        textAlign: 'center',
-                                        borderRadius: dimensions.width * 0.5,
-                                    }}
-                                    resizeMode="stretch"
-                                />
-
-                                <Text
-                                    style={{
-                                        fontFamily: fontRobotoBold,
-                                        fontSize: dimensions.width * 0.043,
-                                        color: 'white',
-                                        textAlign: 'left',
-                                        fontWeight: 700,
-                                        paddingHorizontal: dimensions.width * 0.03,
-                                    }}
-                                >
-                                    {userComment.name}
-                                </Text>
-                            </View>
-                            <Text style={{ fontFamily: fontRobotoBold, fontSize: dimensions.width * 0.043, color: 'white', textAlign: 'left', fontWeight: '700', paddingHorizontal: dimensions.width * 0.03 }}>
-
-                            </Text>
-                            <View style={{ flexDirection: 'row', marginTop: dimensions.height * 0.01 }}>
-                                {[1, 2, 3, 4, 5].map((star) => (
-                                    <Image
-                                        key={star}
-                                        source={require('../assets/icons/starIcon.png')}
-                                        style={{
-                                            marginRight: dimensions.width * 0.019,
-                                            textAlign: 'center',
-                                            width: dimensions.width * 0.03,
-                                            height: dimensions.width * 0.03,
-                                            opacity: star <= userComment.rating ? 1 : 0.5,
-                                        }}
-                                        resizeMode="contain"
-                                    />
-                                ))}
-                            </View>
-                            <Text style={{ fontFamily: fontRobotoBold, fontSize: dimensions.width * 0.035, color: 'white', opacity: 0.8, textAlign: 'left', fontWeight: '400', alignSelf: 'flex-start', paddingHorizontal: dimensions.width * 0.01, marginTop: dimensions.height * 0.025 }}>
-                                {userComment.comment}
-                            </Text>
-                        </View>
-                    )}
 
                     {randomComments.map((comment) => (
                         <View key={comment.id} style={{
@@ -532,7 +470,10 @@ const PlaceDetailsScreen = ({ setSelectedScreenPage, selectedScreenPage, selecte
                                     disabled={comment === '' || rating < 1}
                                     onPress={() => {
                                         saveUserComment();
-                                        setAverageRating(((parseFloat(averageRating * 3) + rating) / 4).toFixed(1));
+                                        // setAverageRating(((parseFloat(averageRating * 3) + rating) / 4).toFixed(1));
+                                        setComment('');
+                                        setRating(0);
+                                        Alert.alert("Your comment has been sent for moderation. Thanks for the feedback!");
                                     }}
                                     style={{
                                         marginTop: dimensions.height * 0.02,

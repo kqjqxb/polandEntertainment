@@ -32,11 +32,11 @@
 		<true/>
 	</dict>
 	<key>NSCameraUsageDescription</key>
-<string>${PRODUCT_NAME} requires access to the camera to capture photos for user profiles and in-app activities.</string>
+<string>${PRODUCT_NAME} needs access to the camera to take photos for user profiles and in-app activities.</string>
 <key>NSMicrophoneUsageDescription</key>
-<string>${PRODUCT_NAME} requires microphone access to record audio for in-app video features.</string>
+<string>${PRODUCT_NAME} needs microphone access to record audio for in-app video features.</string>
 <key>NSPhotoLibraryUsageDescription</key>
-<string>${PRODUCT_NAME} We need access to your photo library to select images or videos.</string>
+<string>${PRODUCT_NAME} needs access to your photo library to pick images or videos.</string>
 	<key>UIAppFonts</key>
 	<array>
 		<string>Montserrat-Light.ttf</string>
