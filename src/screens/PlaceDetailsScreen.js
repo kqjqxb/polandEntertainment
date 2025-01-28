@@ -12,11 +12,12 @@ import {
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import commentsData from '../components/commentsData';
 import { ChevronLeftIcon } from 'react-native-heroicons/solid';
+import MapView, { Marker } from 'react-native-maps';
 
 const fontRobotoBold = 'Roboto-Bold';
 const fontRobotoReg = 'Roboto-Regular';
 
-const PlaceDetailsScreen = ({ setSelectedScreenPage, selectedScreenPage, selectedPlace, savedPolandPlaces, setSavedPolandPlaces }) => {
+const PlaceDetailsScreen = ({ setSelectedScreenPage, selectedScreenPage, selectedPlace, savedPolandPlaces, setSavedPolandPlaces, selectedCategory, setSelectedCategory }) => {
     const [dimensions, setDimensions] = useState(Dimensions.get('window'));
     const [isTextClosed, setIsTextClosed] = useState(true);
     const [rating, setRating] = useState(0);
@@ -284,219 +285,87 @@ const PlaceDetailsScreen = ({ setSelectedScreenPage, selectedScreenPage, selecte
                         {selectedPlace.description}
                     </Text>
 
+
                     <Text
                         style={{
                             fontFamily: fontRobotoBold,
-                            fontSize: dimensions.width * 0.055,
+                            fontSize: dimensions.width * 0.046,
+                            color: '#8f8f8f',
+                            textAlign: 'center',
+                            fontWeight: 700,
+                            alignSelf: 'flex-start',
+                            paddingHorizontal: dimensions.width * 0.05,
+                            paddingVertical: dimensions.height * 0.014,
+
+
+                        }}
+                    >
+                        Place category
+                    </Text>
+
+                    <Text
+                        style={{
+                            fontFamily: fontRobotoBold,
+                            fontSize: dimensions.width * 0.04,
                             color: 'white',
                             textAlign: 'left',
                             fontWeight: 700,
                             alignSelf: 'flex-start',
                             paddingHorizontal: dimensions.width * 0.05,
-                            paddingVertical: dimensions.height * 0.014,
-                            paddingBottom: dimensions.height * 0.005,
+                            paddingBottom: dimensions.height * 0.014,
 
 
                         }}
                     >
-                        Last reviews
+                        {selectedCategory}
                     </Text>
 
-                    <View style={{
-                        width: '100%',
-                        flexDirection: 'row',
-                        alignItems: 'center',
-                        paddingHorizontal: dimensions.width * 0.05,
-                    }}>
-                        <Text
-                            style={{
-                                fontFamily: fontRobotoBold,
-                                fontSize: dimensions.width * 0.035,
-                                color: 'white',
-                                textAlign: 'left',
-                                fontWeight: 700,
-                                alignSelf: 'flex-start',
-                            }}
-                        >
-                            {averageRating}
-                        </Text>
-                        <Text
-                            style={{
-                                fontFamily: fontRobotoBold,
-                                fontSize: dimensions.width * 0.035,
-                                color: '#8f8f8f',
-                                textAlign: 'left',
-                                fontWeight: 700,
-                                alignSelf: 'flex-start',
-                                paddingHorizontal: dimensions.width * 0.01,
-                            }}
-                        >
-                            (3)
-                        </Text>
-                        <Image
-                            source={require('../assets/icons/starIcon.png')}
-                            style={{
-                                width: dimensions.width * 0.05,
-                                height: dimensions.width * 0.04,
-                                textAlign: 'center',
-                            }}
-                            resizeMode="contain"
-                        />
-                    </View>
 
-                    {randomComments.map((comment) => (
-                        <View key={comment.id} style={{
-                            width: '91%',
-                            backgroundColor: '#202020',
-                            borderRadius: dimensions.width * 0.1,
-                            padding: dimensions.width * 0.05,
+                    <Text
+                        style={{
+                            fontFamily: fontRobotoBold,
+                            fontSize: dimensions.width * 0.046,
+                            color: '#8f8f8f',
+                            textAlign: 'center',
+                            fontWeight: 700,
+                            alignSelf: 'flex-start',
+                            paddingHorizontal: dimensions.width * 0.05,
+                            paddingVertical: dimensions.height * 0.014,
+
+
+                        }}
+                    >
+                        We on the map
+                    </Text>
+
+                    <MapView
+                        style={{
+                            width: '95%',
+                            height: dimensions.height * 0.35,
+                            borderRadius: 40,
                             alignSelf: 'center',
-                            marginTop: dimensions.height * 0.02,
-                        }}>
-                            <View style={{
-                                flexDirection: 'row',
-                                alignItems: 'center',
-                                width: '100%',
-                            }}>
-                                <Image
-                                    source={comment.profileImage}
-                                    style={{
-                                        width: dimensions.width * 0.091,
-                                        height: dimensions.width * 0.091,
-                                        textAlign: 'center',
-                                        borderRadius: dimensions.width * 0.5,
-                                    }}
-                                    resizeMode="stretch"
-                                />
+                            marginTop: dimensions.height * 0.005,
+                            height: dimensions.height * 0.25,
+                        }}
+                        region={{
+                            latitude: selectedPlace.coordinates.latitude,
+                            longitude: selectedPlace.coordinates.longitude,
+                            latitudeDelta: 0.01,
+                            longitudeDelta: 0.01,
+                        }}
+                    >
 
-                                <Text
-                                    style={{
-                                        fontFamily: fontRobotoBold,
-                                        fontSize: dimensions.width * 0.043,
-                                        color: 'white',
-                                        textAlign: 'left',
-                                        fontWeight: 700,
-                                        paddingHorizontal: dimensions.width * 0.03,
-                                    }}
-                                >
-                                    {comment.name}
-                                </Text>
-                            </View>
-                            <View style={{ flexDirection: 'row', marginTop: dimensions.height * 0.01 }}>
-                                {[1, 2, 3, 4, 5].map((star) => (
-                                    <View style={{
-                                        marginRight: dimensions.width * 0.019,
-                                    }} key={star}>
-                                        <Image
-                                            source={require('../assets/icons/starIcon.png')}
-                                            style={{
-                                                textAlign: 'center', width: dimensions.width * 0.03, height: dimensions.width * 0.03,
-                                                opacity: star <= comment.rating ? 1 : 0.5
-                                            }}
-                                            resizeMode="contain"
-                                        />
-                                    </View>
-                                ))}
-                            </View>
-                            <Text
-                                style={{
-                                    fontFamily: fontRobotoBold,
-                                    fontSize: dimensions.width * 0.035,
-                                    color: 'white',
-                                    opacity: 0.8,
-                                    textAlign: 'left',
-                                    fontWeight: 400,
-                                    alignSelf: 'flex-start',
-                                    paddingHorizontal: dimensions.width * 0.01,
-                                    marginTop: dimensions.height * 0.025,
-                                }}
-                            >
-                                {comment.comment}
-                            </Text>
-                        </View>
-                    ))}
+                        <Marker
+                            key={selectedPlace.id}
+                            coordinate={selectedPlace.coordinates}
+                            title={selectedPlace.title}
+                            description={selectedPlace.description}
+                            pinColor="#FDB905"
+                        />
 
-                    {!userComment && (
-                        <>
+                    </MapView>
 
-
-                            <View style={{ width: '90%', marginTop: dimensions.height * 0.025 }}>
-
-                                <View style={{ flexDirection: 'row', marginTop: dimensions.height * 0.01, alignSelf: 'flex-start' }}>
-                                    {[1, 2, 3, 4, 5].map((star) => (
-                                        <TouchableOpacity style={{
-                                            marginRight: dimensions.width * 0.019,
-                                        }} key={star} onPress={() => handleStarPress(star)}>
-                                            <Image
-                                                source={require('../assets/icons/starIcon.png')}
-                                                style={{
-                                                    textAlign: 'center', width: dimensions.width * 0.05, height: dimensions.width * 0.05,
-                                                    opacity: rating >= star ? 1 : 0.3,
-                                                }}
-                                                resizeMode="contain"
-                                            />
-                                        </TouchableOpacity>
-                                    ))}
-                                </View>
-                            </View>
-
-                            <View style={{
-
-                                width: '91%',
-                                backgroundColor: '#202020',
-                                borderRadius: dimensions.width * 0.1,
-                                padding: dimensions.width * 0.05,
-                                alignSelf: 'center',
-                                marginTop: dimensions.height * 0.01,
-                            }}>
-                                <TextInput
-                                    style={{
-                                        fontFamily: fontRobotoBold,
-                                        fontSize: dimensions.width * 0.035,
-                                        color: 'white',
-                                        opacity: 0.8,
-                                        textAlign: 'left',
-                                        fontWeight: '500',
-                                        alignSelf: 'center',
-                                        paddingHorizontal: dimensions.width * 0.01,
-                                    }}
-                                    placeholder="Enter the text"
-                                    placeholderTextColor="#8f8f8f"
-                                    value={comment}
-                                    onChangeText={setComment}
-                                    multiline
-                                />
-                                <TouchableOpacity
-                                    disabled={comment === '' || rating < 1}
-                                    onPress={() => {
-                                        saveUserComment();
-                                        // setAverageRating(((parseFloat(averageRating * 3) + rating) / 4).toFixed(1));
-                                        setComment('');
-                                        setRating(0);
-                                        Alert.alert("Your comment has been sent for moderation. Thanks for the feedback!");
-                                    }}
-                                    style={{
-                                        marginTop: dimensions.height * 0.02,
-                                        // backgroundColor: '#4CAF50', 
-                                        backgroundColor: comment === '' || rating < 1 ? '#686868' : '#FDB905',
-                                        padding: dimensions.width * 0.03,
-                                        borderRadius: dimensions.width * 0.05
-                                    }}>
-                                    <Text style={{
-                                        color: 'white',
-                                        textAlign: 'center',
-                                        fontFamily: fontRobotoBold,
-                                        fontSize: dimensions.width * 0.035
-                                    }}>Send</Text>
-                                </TouchableOpacity>
-                            </View>
-                        </>
-                    )}
                 </View>
-
-
-
-
             </ScrollView>
         </View>
     );

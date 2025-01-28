@@ -629,8 +629,8 @@ const HomeScreen = () => {
           entertainments={entertainments} setEntertainments={setEntertainments}
         />
       ) : selectedScreenPage === 'PlaceDetail' ? (
-        <PlaceDetailsScreen setSelectedScreenPage={setSelectedScreenPage} selectedScreenPage={selectedScreenPage} selectedPlace={selectedPlace} savedPolandPlaces={savedPolandPlaces}
-          setSavedPolandPlaces={setSavedPolandPlaces} />
+        <PlaceDetailsScreen setSelectedScreenPage={setSelectedScreenPage} selectedScreenPage={selectedScreenPage} selectedPlace={selectedPlace} savedPolandPlaces={savedPolandPlaces} 
+          setSavedPolandPlaces={setSavedPolandPlaces} selectedCategory={selectedCategory} setSelectedCategory={setSelectedCategory}/>
       ) : selectedScreenPage === 'Map' ? (
         <MapScreen setSelectedScreenPage={setSelectedScreenPage} selectedScreenPage={selectedScreenPage} selectedPlace={selectedPlace} allData={allData}/>
       ) : selectedScreenPage === 'FavoritePlaces' ? (
