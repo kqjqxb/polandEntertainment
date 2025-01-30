@@ -77,7 +77,6 @@ const AddEntertainmentScreen = ({ setSelectedScreenPage, entertainments, setEnte
         } else {
             Alert.alert('Please select a future date.');
         }
-        setShowDatePicker(false);
     };
 
     const handleTimeChange = (event, selectedTime) => {
@@ -91,7 +90,6 @@ const AddEntertainmentScreen = ({ setSelectedScreenPage, entertainments, setEnte
             }
             setTime(selectedTime);
         }
-        // setShowTimePicker(false);
     };
 
     const formatDate = (date) => {
